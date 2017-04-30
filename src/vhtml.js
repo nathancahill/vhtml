@@ -11,7 +11,7 @@ let DOMAttributeNames = {
 let sanitized = {};
 
 function Element(name, attrs, stack) {
-	this.type = typeof name === 'function' ? name.name : name;
+	this.type = name;
 	this.props = attrs || {};
 	this.toString = _h.bind(this, name, stack);
 }
