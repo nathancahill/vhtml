@@ -13,7 +13,9 @@ let sanitized = {};
 function Element(name, attrs, stack) {
 	this.type = name;
 	this.props = attrs || {};
-	this.toString = _h.bind(this, name, stack);
+	this.toString = function () {
+		return _h(this.type, this.props, stack);
+	};
 }
 
 /** Hyperscript reviver that constructs a sanitized HTML string. */
@@ -26,9 +28,7 @@ export default function h(name, attrs) {
 	return new Element(name, attrs, stack);
 }
 
-function _h(name, stack) {
-	let attrs = this.props;
-
+function _h(name, attrs, stack) {
 	// Sortof component support!
 	if (typeof name==='function') {
 		attrs.children = stack.reverse();
