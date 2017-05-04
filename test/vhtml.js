@@ -1,4 +1,5 @@
 import h from '../src/vhtml';
+import stringify from '../src/stringify';
 import { expect } from 'chai';
 /** @jsx h */
 /*global describe,it*/
@@ -163,6 +164,20 @@ describe('vhtml', () => {
 			<div className="my-class" htmlFor="id" />
 		).to.equal(
 			'<div class="my-class" for="id"></div>'
+		);
+	});
+
+	it('should support unsafe html', () => {
+		expect(
+			stringify('div', {}, ['<span>test</span>'], false)
+		).to.equal(
+			'<div>&lt;span&gt;test&lt;/span&gt;</div>'
+		);
+
+		expect(
+			stringify('div', {}, ['<span>test</span>'], true)
+		).to.equal(
+			'<div><span>test</span></div>'
 		);
 	});
 });
