@@ -10,11 +10,18 @@ let DOMAttributeNames = {
 
 let sanitized = {};
 
-export default function stringify(name, attrs, stack) {
+export default function stringify(name, attrs, stack, unsafe) {
 	// Sortof component support!
 	if (typeof name==='function') {
 		attrs.children = stack.reverse();
 		return String(name(attrs));
+	}
+
+	let unsafeChild;
+
+	if (stack && unsafe) {
+		unsafeChild = stack[0];
+		sanitized[unsafeChild] = true;
 	}
 
 	let s = `<${name}`;
@@ -45,6 +52,7 @@ export default function stringify(name, attrs, stack) {
 		s += '>';
 	}
 
+	sanitized[unsafeChild] = false;
 	sanitized[s] = true;
 	return s;
 }
