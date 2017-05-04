@@ -14,7 +14,9 @@ export default function stringify(name, attrs, stack) {
 	// Sortof component support!
 	if (typeof name==='function') {
 		attrs.children = stack.reverse();
-		return String(name(attrs));
+		let resolved = name(attrs);
+		if (resolved === null || resolved === undefined) resolved = '';
+		return String(resolved);
 	}
 
 	let s = `<${name}`;
