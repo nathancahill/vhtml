@@ -165,4 +165,14 @@ describe('vhtml', () => {
 			'<div class="my-class" for="id"></div>'
 		);
 	});
+
+	it('should support returning null and undefined', () => {
+		const Null = props => null;
+		const Undefined = props => undefined;
+
+		expect(<Null />).to.equal('');
+		expect(<Undefined />).to.equal('');
+		expect(<div>{null}</div>).to.equal('<div></div>');
+		expect(<div>{undefined}</div>).to.equal('<div></div>');
+	});
 });
