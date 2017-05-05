@@ -165,4 +165,19 @@ describe('vhtml', () => {
 			'<div class="my-class" for="id"></div>'
 		);
 	});
+
+	it('should support arrays of children', () => {
+		const List = props => {
+			return [
+				<div>First</div>,
+				<div>Second</div>
+			];
+		};
+
+		expect(
+			<List />
+		).to.equal(
+			'<div>First</div><div>Second</div>'
+		);
+	});
 });

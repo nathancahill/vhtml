@@ -14,7 +14,17 @@ export default function stringify(name, attrs, stack) {
 	// Sortof component support!
 	if (typeof name==='function') {
 		attrs.children = stack.reverse();
-		return String(name(attrs));
+		let resolved = name(attrs);
+		if (Array.isArray(resolved)) {
+			let allSanitized = true;
+			resolved = resolved.map(element => {
+				let elementString = String(element);
+				allSanitized = allSanitized && sanitized[elementString];
+				return elementString;
+			}).join('');
+			sanitized[resolved] = allSanitized;
+		}
+		return String(resolved);
 	}
 
 	let s = `<${name}`;
